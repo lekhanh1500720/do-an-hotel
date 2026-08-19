@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - HotelManager</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <div class="container" style="max-width:720px">
+    <h1 class="page-title">Secure Payment</h1>
+    <p class="page-subtitle">This is a demo gateway. Any card ending in an even digit succeeds; odd digits fail.</p>
+
+    <div id="payment-info" class="mb-2"></div>
+
+    <div class="card">
+      <div id="pay-alert" style="display:none"></div>
+      <form id="payment-form">
+        <input type="hidden" id="pay-booking-id">
+        <div class="form-group">
+          <label for="payment_method">Payment method</label>
+          <select id="payment_method" class="form-control">
+            <option value="Card">Card</option>
+            <option value="UPI">UPI</option>
+            <option value="NetBanking">NetBanking</option>
+          </select>
+        </div>
+        <div id="card-fields">
+          <div class="form-group">
+            <label for="card_name">Name on card</label>
+            <input type="text" id="card_name" class="form-control" placeholder="JOHN CARTER">
+          </div>
+          <div class="form-group">
+            <label for="card_number">Card number</label>
+            <input type="text" id="card_number" class="form-control" placeholder="4111 1111 1111 1112" maxlength="19">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-accent btn-block">Pay Now</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>© 2026 HotelManager. All rights reserved.</footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/booking.js"></script>
+</body>
+</html>

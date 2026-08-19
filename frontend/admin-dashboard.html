@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - HotelManager</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title" id="welcome">Admin Dashboard</h1>
+        <p class="page-subtitle">Manage hotels, rooms, bookings and customers.</p>
+      </div>
+      <a href="reports.html" class="btn btn-primary">View Reports</a>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="overview">Overview</button>
+      <button class="tab" data-tab="hotels">Hotels</button>
+      <button class="tab" data-tab="rooms">Rooms</button>
+      <button class="tab" data-tab="bookings">Bookings</button>
+      <button class="tab" data-tab="customers">Customers</button>
+    </div>
+
+    <!-- Overview -->
+    <div id="panel-overview" class="tab-panel active">
+      <div id="overview-cards" class="stat-grid"></div>
+    </div>
+
+    <!-- Hotels -->
+    <div id="panel-hotels" class="tab-panel">
+      <div class="flex-between mb-2">
+        <h2 class="card-title" style="margin:0">Hotels</h2>
+        <button class="btn btn-accent" onclick="openHotelForm()">+ Add Hotel</button>
+      </div>
+      <div class="table-wrap">
+        <table id="hotels-table">
+          <thead><tr><th>ID</th><th>Name</th><th>City</th><th>Stars</th><th>Rooms</th><th>Rating</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Rooms -->
+    <div id="panel-rooms" class="tab-panel">
+      <div class="flex-between mb-2">
+        <h2 class="card-title" style="margin:0">Rooms</h2>
+        <button class="btn btn-accent" onclick="openRoomForm()">+ Add Room</button>
+      </div>
+      <div class="table-wrap">
+        <table id="rooms-table">
+          <thead><tr><th>ID</th><th>Hotel</th><th>Number</th><th>Type</th><th>Price/night</th><th>Capacity</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Bookings -->
+    <div id="panel-bookings" class="tab-panel">
+      <h2 class="card-title" style="margin-bottom:1rem">Bookings</h2>
+      <div class="table-wrap">
+        <table id="bookings-table">
+          <thead><tr><th>ID</th><th>Customer</th><th>Hotel</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Amount</th><th>Status</th><th>Payment</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Customers -->
+    <div id="panel-customers" class="tab-panel">
+      <div class="flex-between mb-2">
+        <h2 class="card-title" style="margin:0">Customers</h2>
+        <div class="flex">
+          <input type="text" id="customer-search" class="form-control" placeholder="Search name / email / phone" style="width:260px">
+          <button class="btn btn-outline" onclick="loadCustomers()">Search</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="customers-table">
+          <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Bookings</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel form modal -->
+  <div id="hotel-form-modal" style="display:none;position:fixed;inset:0;background:rgba(22,42,68,0.55);z-index:100;align-items:center;justify-content:center;padding:1rem;">
+    <div class="card" style="max-width:520px;width:100%;max-height:90vh;overflow-y:auto;">
+      <h3 class="card-title" id="hotel-form-title">Add Hotel</h3>
+      <form id="hotel-form">
+        <input type="hidden" id="hotel-form-id">
+        <div class="form-group">
+          <label for="h-name">Hotel name</label>
+          <input type="text" id="h-name" class="form-control" required>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="h-city">City</label>
+            <input type="text" id="h-city" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="h-star">Star rating</label>
+            <select id="h-star" class="form-control">
+              <option value="5">5 ★</option>
+              <option value="4">4 ★</option>
+              <option value="3" selected>3 ★</option>
+              <option value="2">2 ★</option>
+              <option value="1">1 ★</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="h-address">Address</label>
+          <input type="text" id="h-address" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="h-description">Description</label>
+          <textarea id="h-description" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="h-image">Image URL</label>
+          <input type="url" id="h-image" class="form-control" placeholder="https://...">
+        </div>
+        <div class="flex">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-ghost" onclick="closeModal('hotel-form-modal')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Room form modal -->
+  <div id="room-form-modal" style="display:none;position:fixed;inset:0;background:rgba(22,42,68,0.55);z-index:100;align-items:center;justify-content:center;padding:1rem;">
+    <div class="card" style="max-width:520px;width:100%;max-height:90vh;overflow-y:auto;">
+      <h3 class="card-title" id="room-form-title">Add Room</h3>
+      <form id="room-form">
+        <input type="hidden" id="room-form-id">
+        <div class="form-group">
+          <label for="room-hotel">Hotel</label>
+          <select id="room-hotel" class="form-control" required></select>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="room-number">Room number</label>
+            <input type="text" id="room-number" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="room-type">Room type</label>
+            <select id="room-type" class="form-control">
+              <option value="Single">Single</option>
+              <option value="Double">Double</option>
+              <option value="Deluxe">Deluxe</option>
+              <option value="Suite">Suite</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="room-price">Price / night</label>
+            <input type="number" id="room-price" class="form-control" min="1" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="room-capacity">Capacity</label>
+            <input type="number" id="room-capacity" class="form-control" min="1" max="10" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="room-status">Status</label>
+          <select id="room-status" class="form-control">
+            <option value="Available">Available</option>
+            <option value="Booked">Booked</option>
+            <option value="Maintenance">Maintenance</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="room-image">Image URL</label>
+          <input type="url" id="room-image" class="form-control" placeholder="https://...">
+        </div>
+        <div class="flex">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-ghost" onclick="closeModal('room-form-modal')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>© 2026 HotelManager. All rights reserved.</footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

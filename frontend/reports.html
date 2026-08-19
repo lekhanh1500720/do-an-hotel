@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports - HotelManager</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Reports & Analytics</h1>
+        <p class="page-subtitle">Revenue, occupancy and performance insights.</p>
+      </div>
+      <a href="admin-dashboard.html" class="btn btn-outline">← Dashboard</a>
+    </div>
+
+    <div class="card mb-3">
+      <h3 class="card-title">Revenue by Date Range</h3>
+      <form id="rev-form" class="filter-bar" style="grid-template-columns:1fr 1fr auto">
+        <div class="form-group">
+          <label for="rev-from">From</label>
+          <input type="date" id="rev-from" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="rev-to">To</label>
+          <input type="date" id="rev-to" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Generate</button>
+      </form>
+      <div id="revenue-result" class="mt-2"></div>
+    </div>
+
+    <div class="grid-2 mb-3">
+      <div class="card">
+        <h3 class="card-title">Occupancy Rate per Hotel (30 days)</h3>
+        <canvas id="occupancy-chart" height="220"></canvas>
+        <div id="occupancy-table" class="mt-2"></div>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Bookings by Status</h3>
+        <canvas id="status-chart" height="220"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">Top Rated Hotels</h3>
+      <div id="top-rated"></div>
+    </div>
+  </div>
+
+  <footer>© 2026 HotelManager. All rights reserved.</footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/reports.js"></script>
+</body>
+</html>

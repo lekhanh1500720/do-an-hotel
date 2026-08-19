@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HotelManager - Find Your Perfect Stay</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <div class="container">
+    <section class="hero">
+      <h1>Find your perfect stay</h1>
+      <p>Search hotels by city, compare prices and book rooms in seconds — no hidden fees, instant confirmation.</p>
+      <form id="hero-search" class="filter-bar mt-3" style="max-width:720px;margin-left:auto;margin-right:auto;background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);">
+        <div class="form-group">
+          <label style="color:#dbe4ee">City</label>
+          <input type="text" id="hero-city" class="form-control" placeholder="e.g. Mumbai, Delhi">
+        </div>
+        <div class="form-group">
+          <label style="color:#dbe4ee">Min price</label>
+          <input type="number" id="hero-min" class="form-control" placeholder="Any">
+        </div>
+        <div class="form-group">
+          <label style="color:#dbe4ee">Max price</label>
+          <input type="number" id="hero-max" class="form-control" placeholder="Any">
+        </div>
+        <div class="form-group">
+          <label style="color:#dbe4ee">Star rating</label>
+          <select id="hero-stars" class="form-control">
+            <option value="">Any</option>
+            <option value="5">5 ★</option>
+            <option value="4">4 ★</option>
+            <option value="3">3 ★</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-accent">Search</button>
+      </form>
+    </section>
+
+    <div class="page-header">
+      <div>
+        <h2 class="page-title">Featured Hotels</h2>
+        <p class="page-subtitle">Top-rated stays across India</p>
+      </div>
+    </div>
+    <div id="hotel-grid" class="hotel-grid"></div>
+  </div>
+
+  <footer>© 2026 HotelManager. All rights reserved.</footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/hotels.js"></script>
+  <script>
+    document.getElementById('hero-search').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const params = new URLSearchParams();
+      const city = document.getElementById('hero-city').value.trim();
+      const min = document.getElementById('hero-min').value;
+      const max = document.getElementById('hero-max').value;
+      const stars = document.getElementById('hero-stars').value;
+      if (city) params.set('city', city);
+      if (min) params.set('min_price', min);
+      if (max) params.set('max_price', max);
+      if (stars) params.set('star_rating', stars);
+      window.location.href = 'hotels.html?' + params.toString();
+    });
+  </script>
+</body>
+</html>

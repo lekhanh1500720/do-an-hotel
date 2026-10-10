@@ -73,7 +73,7 @@ const api = {
 
 // Small helpers used across pages
 function formatCurrency(n) {
-  return '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return Number(n).toLocaleString('vi-VN', { maximumFractionDigits: 0 }) + ' đồng';
 }
 function formatDate(d) {
   if (!d) return '-';
